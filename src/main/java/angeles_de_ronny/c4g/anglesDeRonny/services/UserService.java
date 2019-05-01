@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Component("userService")
@@ -36,5 +37,14 @@ public class UserService {
     public User edit(User aUser) {
         this.get(aUser.getId());
         return userDao.save(aUser);
+    }
+
+    public void delete(long id) {
+        this.get(id);
+        this.userDao.deleteById(id);
+    }
+
+    public List<User> getAll() {
+        return this.userDao.findAll();
     }
 }

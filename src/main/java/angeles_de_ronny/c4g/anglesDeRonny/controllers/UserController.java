@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -30,5 +31,15 @@ public class UserController {
     @PostMapping("/user/edit")
     public User editUser(@RequestBody @Valid User aUser){
         return userService.edit(aUser);
+    }
+
+    @DeleteMapping("/user/{id}/delete")
+    public void deleteUser(@PathVariable("id") long id){
+        userService.delete(id);
+    }
+
+    @GetMapping("/users")
+    public List<User> listUser(){
+        return userService.getAll();
     }
 }
