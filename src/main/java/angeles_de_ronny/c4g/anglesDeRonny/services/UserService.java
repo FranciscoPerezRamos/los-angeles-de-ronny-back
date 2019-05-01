@@ -1,12 +1,14 @@
 package angeles_de_ronny.c4g.anglesDeRonny.services;
 
+import angeles_de_ronny.c4g.anglesDeRonny.exceptions.UserNotFoundException;
 import angeles_de_ronny.c4g.anglesDeRonny.repositories.UserDAO;
-import angeles_de_ronny.c4g.anglesDeRonny.users.User;
+import angeles_de_ronny.c4g.anglesDeRonny.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Component("userService")
 @Transactional
@@ -20,6 +22,19 @@ public class UserService {
     }
 
     public User create(User aUser) {
+        return userDao.save(aUser);
+    }
+
+    public User get(long id) {
+        Optional<User> user = userDao.findById(id);
+        if(!user.isPresent()){
+            throw new UserNotFoundException("User with id:" + id + " not found" );
+        }
+        return user.get();
+    }
+
+    public User edit(User aUser) {
+        this.get(aUser.getId());
         return userDao.save(aUser);
     }
 }

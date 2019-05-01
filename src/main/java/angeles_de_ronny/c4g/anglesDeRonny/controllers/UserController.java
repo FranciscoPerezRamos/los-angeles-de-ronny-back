@@ -1,12 +1,10 @@
 package angeles_de_ronny.c4g.anglesDeRonny.controllers;
 
+import angeles_de_ronny.c4g.anglesDeRonny.entities.User;
 import angeles_de_ronny.c4g.anglesDeRonny.services.UserService;
-import angeles_de_ronny.c4g.anglesDeRonny.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,4 +22,13 @@ public class UserController {
         return userService.create(aUser);
     }
 
+    @GetMapping("/user/{id}/show")
+    public User showUser(@PathVariable("id") long id){
+        return userService.get(id);
+    }
+
+    @PostMapping("/user/edit")
+    public User editUser(@RequestBody @Valid User aUser){
+        return userService.edit(aUser);
+    }
 }

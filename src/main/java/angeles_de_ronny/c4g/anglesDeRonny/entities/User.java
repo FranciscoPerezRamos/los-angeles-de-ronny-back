@@ -1,12 +1,14 @@
-package angeles_de_ronny.c4g.anglesDeRonny.users;
+package angeles_de_ronny.c4g.anglesDeRonny.entities;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @Entity
 public class User {
 
@@ -18,12 +20,12 @@ public class User {
     private String surname;
     @Email(message = "Email should be valid")
     private String email;
-    @Size(min = 8, max = 8, message = " DNI must be 8 characters only")
-    private Integer dni;
+    @Column(unique = true)
+    private int dni;
 
     public User(){ }
 
-    public User(String name, String surname, @Email(message = "Email should be valid") String email, @Size(min = 8, max = 8, message = " DNI must be 8 characters only") Integer dni) {
+    public User(String name, String surname, String email, int dni) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -60,5 +62,13 @@ public class User {
 
     public void setDni(Integer dni) {
         this.dni = dni;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
